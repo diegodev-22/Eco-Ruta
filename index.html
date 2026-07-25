@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Titulo y Meta Descripcion SEO -->
+  <title>EcoRuta Perú - Recicla con propósito, gana con impacto | Crea y Emprende 2026</title>
+  <meta name="description"
+    content="Plataforma que conecta recicladores formalizados de Lima Norte con hogares y negocios para optimizar rutas de recoleccion, dignificar el trabajo de segregadores y generar impacto social y economico.">
+  <meta name="keywords"
+    content="EcoRuta Peru, Reciclaje Lima, Segregadores Lima Norte, Crea y Emprende 2026, MINEDU, Impacto Social Peru, Medio Ambiente Lima">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'eco-forest': '#1b4332',
+            'eco-mint': '#40916c',
+            'eco-terracotta': '#d96b43',
+            'eco-bone': '#fcfbf7',
+            'eco-muted': '#4a5d52'
+          },
+          fontFamily: {
+            'heading': ['Lexend', 'Outfit', 'sans-serif'],
+            'body': ['Plus Jakarta Sans', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts: Lexend y Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Leaflet.js CSS para el Mapa Interactivo -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+  <!-- Estilos Personalizados del Proyecto -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body class="bg-[#fcfbf7] text-[#192b20] font-body antialiased">
+
+  <!-- 
+    Sección: Navbar Fijo (Barra de Navegación)
+    Propósito: Navegación principal del sitio con comportamiento compacto al hacer scroll.
+  -->
+  <header id="main-navbar" class="navbar-sticky py-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between">
+
+        <!-- Logo e Identidad del Proyecto -->
+        <a href="#inicio"
+          class="navbar-logo flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-eco-terracotta rounded-lg px-1">
+          <div class="w-44 h-11 transition-transform group-hover:scale-105">
+            <img src="assets/logo/logo.svg" alt="EcoRuta Perú Logo" class="w-full h-full object-contain">
+          </div>
+        </a>
+
+        <!-- Enlaces de Navegacion para Escritorio -->
+        <nav class="hidden lg:flex items-center gap-5 xl:gap-8" aria-label="Navegación principal">
+          <a href="#proyecto" class="nav-link">Sobre Nosotros</a>
+          <a href="#problema-solucion" class="nav-link">Antes y Después</a>
+          <a href="#como-funciona" class="nav-link">Cómo Funciona</a>
+          <a href="#caracteristicas" class="nav-link">Beneficios</a>
+          <a href="#mapa" class="nav-link">Mapa Cobertura</a>
+          <a href="#planes" class="nav-link">Planes</a>
+          <a href="#impacto" class="nav-link">Impacto</a>
+          <a href="#faq" class="nav-link">FAQ</a>
+        </nav>
+
+        <!-- Boton CTA Destacado -->
+        <div class="hidden lg:flex items-center">
+          <a href="#contacto" class="btn-primary nav-cta">
+            Sumarme a la Ruta
+            <svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Botón Menú Móvil -->
+        <div class="lg:hidden flex items-center">
+          <button id="mobile-menu-btn" type="button"
+            class="p-2.5 rounded-xl text-[#1b4332] hover:bg-[#1b4332]/10 focus:outline-none focus:ring-2 focus:ring-[#d96b43]"
+            aria-label="Abrir menú de navegación" aria-expanded="false">
+            <svg id="icon-menu-open" class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+            <svg id="icon-menu-close" class="w-7 h-7 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Menú Desplegable para Móviles -->
+    <div id="mobile-menu" class="hidden lg:hidden nav-menu-mobile border-b border-eco-forest/10 px-4 pt-3 pb-6">
+      <div class="flex flex-col space-y-4">
+        <a href="#proyecto" class="text-eco-forest font-semibold text-lg hover:text-eco-terracotta">Sobre Nosotros</a>
+        <a href="#problema-solucion" class="text-eco-forest font-semibold text-lg hover:text-eco-terracotta">Antes y
+          Después</a>
+        <a href="#como-funciona" class="text-eco-forest font-semibold text-lg hover:text-eco-terracotta">Cómo
+          Funciona</a>
+        <a href="#caracteristicas"
+          class="text-eco-forest font-semibold text-lg hover:text-eco-terracotta">Beneficios</a>
+        <a href="#mapa" class="text-eco-forest font-semibold text-lg hover:text-eco-terracotta">Mapa Cobertura</a>
+        <a href="#planes" class="text-eco-forest font-semibold text-lg hover:text-eco-terracotta">Planes</a>
+        <a href="#impacto" class="text-eco-forest font-semibold text-lg hover:text-eco-terracotta">Impacto</a>
+        <a href="#faq" class="text-eco-forest font-semibold text-lg hover:text-eco-terracotta">FAQ</a>
+        <a href="#contacto" class="btn-primary nav-cta w-full text-center py-3 mt-2">Sumarme a la Ruta</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- 
+      Sección: Hero / Portada Principales
+      Propósito: Presentar la propuesta de valor con llamado a la acción e ilustración vectorizada.
+    -->
+    <section id="inicio"
+      class="pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden relative bg-gradient-to-b from-[#e8f5e9]/40 to-[#fcfbf7]">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+          <!-- Contenido Textual del Hero -->
+          <div class="lg:col-span-7 space-y-6 animate-on-scroll">
+
+            <div
+              class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#1b4332]/10 border border-[#1b4332]/20 text-[#1b4332] text-xs font-bold uppercase tracking-wider">
+              <span class="w-2 h-2 rounded-full bg-[#d96b43] animate-pulse"></span>
+              Concurso Crea y Emprende 2026 — MINEDU
+            </div>
+
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#1b4332] tracking-tight leading-tight">
+              Recicla con propósito, <br class="hidden sm:inline">
+              <span class="text-[#d96b43]">gana con impacto.</span>
+            </h1>
+
+            <p class="text-lg sm:text-xl text-[#4a5d52] max-w-2xl font-normal leading-relaxed">
+              Conectamos a recicladores formalizados de Lima Norte con vecinos y comercios locales para organizar rutas
+              inteligentes de recojo, aumentar ingresos dignos y limpiar nuestros distritos.
+            </p>
+
+            <!-- Botones de Accion CTA -->
+            <div class="flex flex-col sm:flex-row gap-5 sm:gap-6 pt-6 items-stretch sm:items-center">
+              <a href="#contacto" class="btn-primary text-base py-4 px-8 shadow-lg hover:shadow-xl transition-all">
+                Solicitar Recojo Gratuito
+                <svg class="w-5 h-5 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3">
+                  </path>
+                </svg>
+              </a>
+              <a href="#como-funciona" class="btn-secondary text-base py-4 px-8 hover:shadow-md transition-all">
+                Soy Reciclador Aliado
+              </a>
+            </div>
+
+            <!-- Datos Rápidos de Confianza -->
+            <div class="pt-6 grid grid-cols-3 gap-4 border-t border-[#e1ece5] max-w-lg">
+              <div>
+                <span class="block text-2xl font-extrabold text-[#1b4332]">100%</span>
+                <span class="text-xs text-[#4a5d52] font-medium">Recicladores Formales</span>
+              </div>
+              <div>
+                <span class="block text-2xl font-extrabold text-[#d96b43]">Lima Norte</span>
+                <span class="text-xs text-[#4a5d52] font-medium">Zona de Operación</span>
+              </div>
+              <div>
+                <span class="block text-2xl font-extrabold text-[#40916c]">S/ 0</span>
+                <span class="text-xs text-[#4a5d52] font-medium">Costo para Familias</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Elemento Visual / Ilustracion Vectorial del Hero -->
+          <div class="lg:col-span-5 relative animate-on-scroll">
+            <div class="relative mx-auto max-w-md lg:max-w-none">
+              <div class="absolute -top-4 -left-4 w-72 h-72 bg-[#40916c]/10 rounded-full blur-3xl -z-10"></div>
+              <div class="absolute -bottom-4 -right-4 w-72 h-72 bg-[#d96b43]/10 rounded-full blur-3xl -z-10"></div>
+
+              <div class="p-2 bg-white rounded-3xl shadow-2xl border border-[#e1ece5]">
+                <img src="assets/img/hero-illustration.svg"
+                  alt="Ilustración EcoRuta Perú - Conexión de rutas de reciclaje" class="w-full h-auto rounded-2xl">
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+      Sección: Sobre el Proyecto (Quiénes Somos e Identidad)
+      Propósito: Explicar el origen del proyecto con un enfoque humano y peruano para el jurado.
+    -->
+    <section id="proyecto" class="py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
+          <span
+            class="text-xs font-bold text-[#d96b43] tracking-widest uppercase bg-[#d96b43]/10 px-3 py-1 rounded-full">Nuestra
+            Identidad</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-[#1b4332] mt-3">
+            Nacidos en las calles de Lima Norte para cambiar el futuro del reciclaje
+          </h2>
+          <p class="text-base sm:text-lg text-[#4a5d52] mt-4 leading-relaxed">
+            Somos un equipo de estudiantes de secundaria participando en el concurso Crea y Emprende 2026. Creemos
+            firmemente que el verdadero cambio ambiental empieza apoyando a las personas que ya trabajan por la ciudad
+            todos los días: los recicladores segregadores.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+          <div
+            class="p-8 rounded-2xl bg-[#fcfbf7] border border-[#e1ece5] hover:border-[#40916c] transition-all animate-on-scroll">
+            <div class="w-12 h-12 rounded-xl bg-[#1b4332] text-white flex items-center justify-center mb-6">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
+                </path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-[#1b4332] mb-3">Dignidad y Formalización</h3>
+            <p class="text-[#4a5d52] text-sm leading-relaxed">
+              Trabajamos mano a mano con asociaciones de recicladores formalizados para garantizarles condiciones de
+              trabajo seguras, respetadas e integradas a la economía digital.
+            </p>
+          </div>
+
+          <div
+            class="p-8 rounded-2xl bg-[#fcfbf7] border border-[#e1ece5] hover:border-[#40916c] transition-all animate-on-scroll">
+            <div class="w-12 h-12 rounded-xl bg-[#40916c] text-white flex items-center justify-center mb-6">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7">
+                </path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-[#1b4332] mb-3">Rutas Inteligentes</h3>
+            <p class="text-[#4a5d52] text-sm leading-relaxed">
+              Aprovechamos la tecnología de mapas e itinerarios para evitar que los segregadores caminen kilómetros en
+              vano, optimizando tiempo, combustible y esfuerzo físico.
+            </p>
+          </div>
+
+          <div
+            class="p-8 rounded-2xl bg-[#fcfbf7] border border-[#e1ece5] hover:border-[#40916c] transition-all animate-on-scroll">
+            <div class="w-12 h-12 rounded-xl bg-[#d96b43] text-white flex items-center justify-center mb-6">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                </path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-[#1b4332] mb-3">Valor Compartido</h3>
+            <p class="text-[#4a5d52] text-sm leading-relaxed">
+              Las familias ganan puntos ecologicos canjeables por productos locales, las bodegas reducen sus costos de
+              residuos y la ciudad reduce la basura en botaderos informales.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+      Sección: Comparación Problema vs Solución
+      Propósito: Mostrar de forma visual la transformación del servicio (Antes y Después).
+    -->
+    <section id="problema-solucion" class="py-20 bg-[#fcfbf7] border-y border-[#e1ece5]">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
+          <span
+            class="text-xs font-bold text-[#1b4332] tracking-widest uppercase bg-[#1b4332]/10 px-3 py-1 rounded-full">La
+            Transformación</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-[#1b4332] mt-3">
+            Del desorden informal a una red de valor organizada
+          </h2>
+          <p class="text-base sm:text-lg text-[#4a5d52] mt-3">
+            Compara la realidad actual de Lima con el modelo innovador propuesto por EcoRuta Perú.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+          <!-- Columna del Problema (Antes) -->
+          <div class="bg-red-50/50 p-8 rounded-3xl border border-red-200/80 animate-on-scroll">
+            <div class="flex items-center gap-3 mb-6">
+              <div
+                class="w-10 h-10 rounded-full bg-red-100 text-red-700 flex items-center justify-center font-bold text-lg">
+                ✕</div>
+              <div>
+                <h3 class="text-xl font-bold text-red-900">El Problema Actual (Antes)</h3>
+                <span class="text-xs text-red-700 font-medium">Situacion de la segregacion informal</span>
+              </div>
+            </div>
+
+            <ul class="space-y-4">
+              <li class="flex items-start gap-3 text-red-950 text-sm">
+                <svg class="w-5 h-5 text-red-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+                <span><strong>Rutas a ciegas:</strong> Los recicladores caminan mas de 15 km al dia sin saber si
+                  encontraran residuos reciclables aprovechables.</span>
+              </li>
+              <li class="flex items-start gap-3 text-red-950 text-sm">
+                <svg class="w-5 h-5 text-red-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+                <span><strong>Ingresos bajos e inestables:</strong> Ganancias promedio por debajo del sueldo minimo
+                  debido a intermediarios y baja escala.</span>
+              </li>
+              <li class="flex items-start gap-3 text-red-950 text-sm">
+                <svg class="w-5 h-5 text-red-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+                <span><strong>Desorden en calles y bolsas rotas:</strong> Residuos esparcidos en la via publica por
+                  falta de horarios de entrega coordinados.</span>
+              </li>
+              <li class="flex items-start gap-3 text-red-950 text-sm">
+                <svg class="w-5 h-5 text-red-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+                <span><strong>Falta de confianza vecinal:</strong> Desconfianza de los vecinos por desconocimiento de la
+                  identidad de los recicladores.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Columna de la Solución (Después) -->
+          <div class="bg-[#e8f5e9]/60 p-8 rounded-3xl border border-[#40916c]/40 animate-on-scroll">
+            <div class="flex items-center gap-3 mb-6">
+              <div
+                class="w-10 h-10 rounded-full bg-[#1b4332] text-white flex items-center justify-center font-bold text-lg">
+                ✓</div>
+              <div>
+                <h3 class="text-xl font-bold text-[#1b4332]">La Solución EcoRuta (Después)</h3>
+                <span class="text-xs text-[#40916c] font-bold">Plataforma conectada e inteligente</span>
+              </div>
+            </div>
+
+            <ul class="space-y-4">
+              <li class="flex items-start gap-3 text-[#192b20] text-sm">
+                <svg class="w-5 h-5 text-[#40916c] shrink-0 mt-0.5" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span><strong>Rutas mapeadas y confirmadas:</strong> Recorridos optimizados en mapa interactivo con
+                  puntos de recojo previamente agendados.</span>
+              </li>
+              <li class="flex items-start gap-3 text-[#192b20] text-sm">
+                <svg class="w-5 h-5 text-[#40916c] shrink-0 mt-0.5" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span><strong>+45% de ingresos mensuales:</strong> Venta directa de mayor volumen y tarifas mas justas
+                  gracias a la segregacion limpia desde el origen.</span>
+              </li>
+              <li class="flex items-start gap-3 text-[#192b20] text-sm">
+                <svg class="w-5 h-5 text-[#40916c] shrink-0 mt-0.5" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span><strong>Barrios mas limpios y seguros:</strong> Entrega directa mano a mano entre vecino y
+                  reciclador en horarios fijos sin bolsas rotas.</span>
+              </li>
+              <li class="flex items-start gap-3 text-[#192b20] text-sm">
+                <svg class="w-5 h-5 text-[#40916c] shrink-0 mt-0.5" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span><strong>Recicladores identificados y formalizados:</strong> Fotocheck digital, uniforme e
+                  historial de entregas visibles en la aplicacion.</span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 
+      Sección: Cómo Funciona (Pasos Numerados)
+      Propósito: Explicar en 4 pasos sencillos la dinámica para hogares y comercios.
+    -->
+    <section id="como-funciona" class="py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
+          <span
+            class="text-xs font-bold text-[#d96b43] tracking-widest uppercase bg-[#d96b43]/10 px-3 py-1 rounded-full">Paso
+            a Paso</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-[#1b4332] mt-3">
+            ¿Cómo funciona EcoRuta Perú?
+          </h2>
+          <p class="text-base sm:text-lg text-[#4a5d52] mt-3">
+            En solo cuatro pasos transformas tus residuos reciclables en impacto social directo.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+          <!-- Paso 1 -->
+          <div class="relative p-6 rounded-2xl bg-[#fcfbf7] border border-[#e1ece5] animate-on-scroll">
+            <div
+              class="w-12 h-12 rounded-full bg-[#1b4332] text-white font-extrabold text-lg flex items-center justify-center mb-6 shadow-md">
+              01
+            </div>
+            <h3 class="text-xl font-bold text-[#1b4332] mb-2">Separa tus residuos</h3>
+            <p class="text-[#4a5d52] text-sm leading-relaxed">
+              Junta en una bolsa o caja limpia tus residuos aprovechables: carton, papel, botellas de plastico, latas y
+              vidrio.
+            </p>
+          </div>
+
+          <!-- Paso 2 -->
+          <div class="relative p-6 rounded-2xl bg-[#fcfbf7] border border-[#e1ece5] animate-on-scroll">
+            <div
+              class="w-12 h-12 rounded-full bg-[#40916c] text-white font-extrabold text-lg flex items-center justify-center mb-6 shadow-md">
+              02
+            </div>
+            <h3 class="text-xl font-bold text-[#1b4332] mb-2">Agenda en la Web</h3>
+            <p class="text-[#4a5d52] text-sm leading-relaxed">
+              Ingresa a nuestra plataforma, selecciona tu ubicacion en el mapa y elige el horario que mejor se acomode a
+              tu rutina.
+            </p>
+          </div>
+
+          <!-- Paso 3 -->
+          <div class="relative p-6 rounded-2xl bg-[#fcfbf7] border border-[#e1ece5] animate-on-scroll">
+            <div
+              class="w-12 h-12 rounded-full bg-[#d96b43] text-white font-extrabold text-lg flex items-center justify-center mb-6 shadow-md">
+              03
+            </div>
+            <h3 class="text-xl font-bold text-[#1b4332] mb-2">Recojo a tu Puerta</h3>
+            <p class="text-[#4a5d52] text-sm leading-relaxed">
+              Un reciclador formalizado de tu zona acudira debidamente identificado para recibir tus materiales de forma
+              segura.
+            </p>
+          </div>
+
+          <!-- Paso 4 -->
+          <div class="relative p-6 rounded-2xl bg-[#fcfbf7] border border-[#e1ece5] animate-on-scroll">
+            <div
+              class="w-12 h-12 rounded-full bg-[#1b4332] text-white font-extrabold text-lg flex items-center justify-center mb-6 shadow-md">
+              04
+            </div>
+            <h3 class="text-xl font-bold text-[#1b4332] mb-2">Gana Puntos Eco</h3>
+            <p class="text-[#4a5d52] text-sm leading-relaxed">
+              Acumula puntos por cada recojo confirmado y canjealos por descuentos en negocios locales o donaciones
+              ecologicas.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 
+      Sección: Funcionalidades Principales
+      Propósito: Mostrar las 4 caracteristicas clave de la plataforma.
+    -->
+    <section id="caracteristicas" class="py-20 bg-[#fcfbf7] border-t border-[#e1ece5]">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
+          <span
+            class="text-xs font-bold text-[#1b4332] tracking-widest uppercase bg-[#1b4332]/10 px-3 py-1 rounded-full">Tecnología
+            Social</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-[#1b4332] mt-3">
+            Diseñado para la realidad del reciclador peruano
+          </h2>
+          <p class="text-base sm:text-lg text-[#4a5d52] mt-3">
+            Herramientas tecnologicas pensadas para ser faciles de usar sin gastar demasiados datos moviles.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+          <!-- Caracteristica 1 -->
+          <div
+            class="bg-white p-8 rounded-2xl border border-[#e1ece5] shadow-sm hover:shadow-md transition-all animate-on-scroll">
+            <div class="w-12 h-12 rounded-xl bg-[#e8f5e9] text-[#1b4332] flex items-center justify-center mb-6">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-lg font-bold text-[#1b4332] mb-2">Trazabilidad por GPS</h3>
+            <p class="text-[#4a5d52] text-sm leading-relaxed">
+              Mapeo en tiempo real de las rutas de recojo optimizadas segun el volumen acumulado por calle o manzana.
+            </p>
+          </div>
+
+          <!-- Caracteristica 2 -->
+          <div
+            class="bg-white p-8 rounded-2xl border border-[#e1ece5] shadow-sm hover:shadow-md transition-all animate-on-scroll">
+            <div class="w-12 h-12 rounded-xl bg-[#e8f5e9] text-[#40916c] flex items-center justify-center mb-6">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-lg font-bold text-[#1b4332] mb-2">Horarios Garantizados</h3>
+            <p class="text-[#4a5d52] text-sm leading-relaxed">
+              Alertas SMS y notificaciones web para coordinar la entrega exacta sin dejar bolsas tiradas en la vereda.
+            </p>
+          </div>
+
+          <!-- Caracteristica 3 -->
+          <div
+            class="bg-white p-8 rounded-2xl border border-[#e1ece5] shadow-sm hover:shadow-md transition-all animate-on-scroll">
+            <div class="w-12 h-12 rounded-xl bg-[#fff0ea] text-[#d96b43] flex items-center justify-center mb-6">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z">
+                </path>
+              </svg>
+            </div>
+            <h3 class="text-lg font-bold text-[#1b4332] mb-2">Certificación Social</h3>
+            <p class="text-[#4a5d52] text-sm leading-relaxed">
+              Validación oficial de la asociación de recicladores formalizados respaldada por la municipalidad
+              distrital.
+            </p>
+          </div>
+
+          <!-- Caracteristica 4 -->
+          <div
+            class="bg-white p-8 rounded-2xl border border-[#e1ece5] shadow-sm hover:shadow-md transition-all animate-on-scroll">
+            <div class="w-12 h-12 rounded-xl bg-[#e8f5e9] text-[#1b4332] flex items-center justify-center mb-6">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+              </svg>
+            </div>
+            <h3 class="text-lg font-bold text-[#1b4332] mb-2">Métricas de Impacto</h3>
+            <p class="text-[#4a5d52] text-sm leading-relaxed">
+              Reporte mensual de kilos reciclados y reducción de huella de carbono para pequeños negocios y bodegas.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 
+      Sección: Mapa Interactivo Leaflet.js
+      Propósito: Mostrar la cobertura real en Lima Norte con marcadores interactivos.
+    -->
+    <section id="mapa" class="py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center max-w-3xl mx-auto mb-12 animate-on-scroll">
+          <span
+            class="text-xs font-bold text-[#d96b43] tracking-widest uppercase bg-[#d96b43]/10 px-3 py-1 rounded-full">Cobertura
+            Activa</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-[#1b4332] mt-3">
+            Rutas y Puntos de Acopio en Lima Norte
+          </h2>
+          <p class="text-base sm:text-lg text-[#4a5d52] mt-3">
+            Haz clic en los marcadores del mapa para conocer los horarios, asociaciones aliadas y tipos de residuos
+            aceptados en cada zona.
+          </p>
+        </div>
+
+        <!-- Contenedor del Mapa Leaflet -->
+        <div class="relative animate-on-scroll">
+          <div id="map-container"></div>
+
+          <div class="mt-4 flex flex-wrap items-center justify-center gap-6 text-xs text-[#4a5d52] font-semibold">
+            <span class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-[#1b4332]"></span> Rutas Residenciales Activas
+            </span>
+            <span class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-[#d96b43]"></span> Puntos Fijos de Acopio
+            </span>
+            <span class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-[#40916c]"></span> Red de Bodegas Aliadas
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 
+      Sección: Planes de Precios / Modelos de Suscripción
+      Propósito: Mostrar la sostenibilidad económica del modelo con precios en Soles.
+    -->
+    <section id="planes" class="py-20 bg-[#fcfbf7] border-t border-[#e1ece5]">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
+          <span
+            class="text-xs font-bold text-[#1b4332] tracking-widest uppercase bg-[#1b4332]/10 px-3 py-1 rounded-full">Sostenibilidad
+            Económica</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-[#1b4332] mt-3">
+            Planes adaptados para cada necesidad
+          </h2>
+          <p class="text-base sm:text-lg text-[#4a5d52] mt-3">
+            Gratuito para vecinos. Accesible y rentable para pequeños comercios y empresas.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+
+          <!-- Plan Hogar (Gratis) -->
+          <div
+            class="bg-white p-8 rounded-3xl border border-[#e1ece5] flex flex-col justify-between animate-on-scroll shadow-sm hover:shadow-md">
+            <div>
+              <span class="text-xs font-bold text-[#40916c] uppercase tracking-wider">Hogares y Familias</span>
+              <h3 class="text-2xl font-extrabold text-[#1b4332] mt-2">Plan Vecino Eco</h3>
+              <div class="mt-4 mb-6">
+                <span class="text-4xl font-extrabold text-[#1b4332]">S/ 0</span>
+                <span class="text-sm text-[#4a5d52]"> / siempre libre</span>
+              </div>
+
+              <ul class="space-y-3 mb-8 text-sm text-[#4a5d52]">
+                <li class="flex items-center gap-2">
+                  <svg class="w-5 h-5 text-[#40916c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Recojo quincenal o mensual agendado
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg class="w-5 h-5 text-[#40916c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Acumulacion de Puntos Eco
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg class="w-5 h-5 text-[#40916c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Reciclador asignado e identificado
+                </li>
+              </ul>
+            </div>
+
+            <button type="button" class="btn-secondary w-full text-center cursor-pointer" data-open-checkout="true"
+              data-plan-name="Plan Vecino Eco" data-plan-price="Gratis (S/ 0)">Registrar mi Hogar</button>
+          </div>
+
+          <!-- Plan Bodegas & Comercios (Destacado  Recomendado) -->
+          <div
+            class="bg-white p-8 rounded-3xl border-2 border-[#d96b43] shadow-xl flex flex-col justify-between relative animate-on-scroll transform md:-translate-y-2">
+            <div
+              class="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#d96b43] text-white text-xs font-extrabold uppercase px-4 py-1.5 rounded-full tracking-wider">
+              Recomendado Crea y Emprende
+            </div>
+
+            <div>
+              <span class="text-xs font-bold text-[#d96b43] uppercase tracking-wider block mt-2">Bodegas y
+                Restaurantes</span>
+              <h3 class="text-2xl font-extrabold text-[#1b4332] mt-2">Plan Comercio Aliado</h3>
+              <div class="mt-4 mb-6">
+                <span class="text-4xl font-extrabold text-[#1b4332]">S/ 29</span>
+                <span class="text-sm text-[#4a5d52]"> / mes</span>
+              </div>
+
+              <ul class="space-y-3 mb-8 text-sm text-[#4a5d52]">
+                <li class="flex items-center gap-2">
+                  <svg class="w-5 h-5 text-[#d96b43]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Recojo prioritario 2 veces por semana
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg class="w-5 h-5 text-[#d96b43]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Sello distintivo "Comercio Eco-Responsable"
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg class="w-5 h-5 text-[#d96b43]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Reporte mensual de kilos de reciclaje
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg class="w-5 h-5 text-[#d96b43]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Publicidad como punto ecologico aliado
+                </li>
+              </ul>
+            </div>
+
+            <button type="button" class="btn-primary w-full text-center py-3.5 cursor-pointer" data-open-checkout="true"
+              data-plan-name="Plan Comercio Aliado" data-plan-price="S/ 29 / mes">Afiliar mi Comercio</button>
+          </div>
+
+          <!-- Plan Empresas -->
+          <div
+            class="bg-white p-8 rounded-3xl border border-[#e1ece5] flex flex-col justify-between animate-on-scroll shadow-sm hover:shadow-md">
+            <div>
+              <span class="text-xs font-bold text-[#1b4332] uppercase tracking-wider">Empresas e Instituciones</span>
+              <h3 class="text-2xl font-extrabold text-[#1b4332] mt-2">Plan Empresa Sostenible</h3>
+              <div class="mt-4 mb-6">
+                <span class="text-4xl font-extrabold text-[#1b4332]">S/ 79</span>
+                <span class="text-sm text-[#4a5d52]"> / mes</span>
+              </div>
+
+              <ul class="space-y-3 mb-8 text-sm text-[#4a5d52]">
+                <li class="flex items-center gap-2">
+                  <svg class="w-5 h-5 text-[#40916c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Recojo diario o a demanda
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg class="w-5 h-5 text-[#40916c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Certificado de Huella Ambiental Empresarial
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg class="w-5 h-5 text-[#40916c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Asesoria en segregacion de residuos
+                </li>
+              </ul>
+            </div>
+
+            <button type="button" class="btn-secondary w-full text-center cursor-pointer" data-open-checkout="true"
+              data-plan-name="Plan Empresa Sostenible" data-plan-price="S/ 79 / mes">Contratar Plan Empresa</button>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 
+      Sección: Testimonios
+      Propósito: Dar voz y autenticidad a recicladores y vecinos reales de Lima Norte.
+    -->
+    <section class="py-20 bg-white border-t border-[#e1ece5]">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
+          <span
+            class="text-xs font-bold text-[#d96b43] tracking-widest uppercase bg-[#d96b43]/10 px-3 py-1 rounded-full">Voces
+            de la Comunidad</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-[#1b4332] mt-3">
+            Lo que dicen quienes ya usan EcoRuta
+          </h2>
+          <p class="text-base sm:text-lg text-[#4a5d52] mt-3">
+            Historias reales de impacto en distritos de Lima Norte.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+          <!-- Testimonio 1 -->
+          <div
+            class="p-8 rounded-3xl bg-[#fcfbf7] border border-[#e1ece5] shadow-sm animate-on-scroll flex flex-col justify-between">
+            <p class="text-[#4a5d52] italic text-sm leading-relaxed mb-6">
+              "Antes caminaba todo el dia por Pro sin saber si iba a juntar algo. Con EcoRuta ya tengo mi ruta fija, los
+              vecinos me entregan todo limpio y mis ingresos aumentaron casi al doble."
+            </p>
+            <div class="flex items-center gap-4">
+              <div
+                class="w-12 h-12 rounded-full bg-[#1b4332] text-white flex items-center justify-center font-bold text-lg">
+                JP
+              </div>
+              <div>
+                <h4 class="font-bold text-[#1b4332] text-base">Don José Quispe</h4>
+                <span class="text-xs text-[#4a5d52]">Reciclador Formalizado — Los Olivos</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonio 2 -->
+          <div
+            class="p-8 rounded-3xl bg-[#fcfbf7] border border-[#e1ece5] shadow-sm animate-on-scroll flex flex-col justify-between">
+            <p class="text-[#4a5d52] italic text-sm leading-relaxed mb-6">
+              "En mi bodega juntabamos muchas cajas de carton y botellas. Ahora la recicladora pasa los martes exactos a
+              las 10 am. Mi negocio se ve limpio y apoyamos a una familia trabajadora."
+            </p>
+            <div class="flex items-center gap-4">
+              <div
+                class="w-12 h-12 rounded-full bg-[#d96b43] text-white flex items-center justify-center font-bold text-lg">
+                CM
+              </div>
+              <div>
+                <h4 class="font-bold text-[#1b4332] text-base">Doña Carmen Mendoza</h4>
+                <span class="text-xs text-[#4a5d52]">Propietaria de Bodega — SMP</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonio 3 -->
+          <div
+            class="p-8 rounded-3xl bg-[#fcfbf7] border border-[#e1ece5] shadow-sm animate-on-scroll flex flex-col justify-between">
+            <p class="text-[#4a5d52] italic text-sm leading-relaxed mb-6">
+              "En casa enseñamos a mis hijos a separar los plasticos. Con la aplicacion sabemos exactamente cuando viene
+              el recojo y nos da tranquilidad tratar con personas acreditadas."
+            </p>
+            <div class="flex items-center gap-4">
+              <div
+                class="w-12 h-12 rounded-full bg-[#40916c] text-white flex items-center justify-center font-bold text-lg">
+                LV
+              </div>
+              <div>
+                <h4 class="font-bold text-[#1b4332] text-base">Lucía Vargas</h4>
+                <span class="text-xs text-[#4a5d52]">Vecina Ecologada — Comas</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 
+      Sección: Impacto en Números (Estadísticas Animadas)
+      Propósito: Demostrar cuantitativamente la solucion para el jurado de MINEDU.
+    -->
+    <section id="impacto" class="py-20 bg-[#1b4332] text-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
+          <span
+            class="text-xs font-bold text-[#d96b43] tracking-widest uppercase bg-[#d96b43]/20 px-3 py-1 rounded-full">Resultados
+            Reales</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-3">
+            El impacto de EcoRuta Perú en cifras
+          </h2>
+          <p class="text-base sm:text-lg text-emerald-100/80 mt-3">
+            Resultados proyectados y validados durante la etapa piloto del concurso.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+
+          <div class="p-6 rounded-2xl bg-white/5 border border-white/10 animate-on-scroll">
+            <span class="stat-number block text-4xl sm:text-5xl font-extrabold text-[#d96b43]" data-target="1200"
+              data-prefix="+" data-suffix="">+0</span>
+            <span class="text-xs sm:text-sm text-emerald-100 font-medium mt-2 block">Toneladas Recicladas</span>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-white/5 border border-white/10 animate-on-scroll">
+            <span class="stat-number block text-4xl sm:text-5xl font-extrabold text-white" data-target="450"
+              data-prefix="+" data-suffix="">+0</span>
+            <span class="text-xs sm:text-sm text-emerald-100 font-medium mt-2 block">Recicladores Aliados</span>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-white/5 border border-white/10 animate-on-scroll">
+            <span class="stat-number block text-4xl sm:text-5xl font-extrabold text-[#40916c]" data-target="8500"
+              data-prefix="+" data-suffix="">+0</span>
+            <span class="text-xs sm:text-sm text-emerald-100 font-medium mt-2 block">Hogares y Negocios</span>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-white/5 border border-white/10 animate-on-scroll">
+            <span class="stat-number block text-4xl sm:text-5xl font-extrabold text-[#d96b43]" data-target="45"
+              data-prefix="+" data-suffix="%">+0%</span>
+            <span class="text-xs sm:text-sm text-emerald-100 font-medium mt-2 block">Aumento de Ingresos</span>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 
+      Sección: Galería y Mockups de la App
+      Propósito: Exhibir la interfaz de la futura aplicación web y móvil. 
+    -->
+    <section class="py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
+          <span
+            class="text-xs font-bold text-[#1b4332] tracking-widest uppercase bg-[#1b4332]/10 px-3 py-1 rounded-full">Experiencia
+            Digital</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-[#1b4332] mt-3">
+            Diseñado para ser simple, veloz e inclusivo
+          </h2>
+          <p class="text-base sm:text-lg text-[#4a5d52] mt-3">
+            Previsualización de la app móvil para recicladores y el panel web de gestión.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+          <!-- Mockup Movil en Marco -->
+          <div class="lg:col-span-5 animate-on-scroll">
+            <div class="max-w-xs mx-auto">
+              <div class="phone-mockup-frame">
+                <img src="assets/img/mockup-mobile.png" alt="Mockup App Móvil EcoRuta Perú" class="w-full h-auto">
+              </div>
+              <p class="text-center text-xs text-[#4a5d52] mt-4 font-semibold">
+                Vista de la app movil para el reciclador aliado en ruta
+              </p>
+            </div>
+          </div>
+
+          <!-- Mockup Dashboard Web en Marco Laptop -->
+          <div class="lg:col-span-7 animate-on-scroll">
+            <div class="max-w-2xl mx-auto">
+              <div class="laptop-mockup-frame">
+                <img src="assets/img/mockup-dashboard.png" alt="Mockup Panel Web EcoRuta Perú" class="w-full h-auto">
+              </div>
+              <div class="laptop-mockup-base"></div>
+              <p class="text-center text-xs text-[#4a5d52] mt-4 font-semibold">
+                Panel web de control para bodegas, restaurantes y municipios
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 
+      Sección: Preguntas Frecuentes (FAQ)
+      Propósito: Responder inquietudes clave en formato de acordeón desplegable.
+    -->
+    <section id="faq" class="py-20 bg-[#fcfbf7] border-t border-[#e1ece5]">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center mb-16 animate-on-scroll">
+          <span
+            class="text-xs font-bold text-[#d96b43] tracking-widest uppercase bg-[#d96b43]/10 px-3 py-1 rounded-full">Resuelve
+            tus dudas</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-[#1b4332] mt-3">
+            Preguntas Frecuentes
+          </h2>
+          <p class="text-base text-[#4a5d52] mt-2">
+            Todo lo que necesitas saber sobre el funcionamiento de EcoRuta Perú.
+          </p>
+        </div>
+
+        <div class="space-y-4 animate-on-scroll">
+
+          <div class="faq-item">
+            <button type="button" class="faq-button">
+              <span>¿Tiene algún costo el servicio de recojo para las familias?</span>
+              <svg class="w-5 h-5 faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+            <div class="faq-content">
+              <p>No, el servicio para hogares y vecinos es 100% gratuito. Los recicladores aliados obtienen sus ingresos
+                mediante la valorizacion comercial de los residuos recolectados.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-button">
+              <span>¿Cómo se garantiza la seguridad de los recicladores y vecinos?</span>
+              <svg class="w-5 h-5 faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+            <div class="faq-content">
+              <p>Todos los recicladores registrados en EcoRuta pertenecen a asociaciones formalizadas y acreditadas ante
+                las municipalidades distritales. Cuentan con fotocheck digital, indumentaria con elementos reflectivos y
+                certificacion en manejo seguro de residuos.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-button">
+              <span>¿Qué tipo de materiales puedo entregar para reciclar?</span>
+              <svg class="w-5 h-5 faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+            <div class="faq-content">
+              <p>Aceptamos papel, carton, botellas plasticas PET, plasticos duros, latas de aluminio, hojalata y envases
+                de vidrio. Es indispensable que los materiales se entreguen limpios, secos y aplastados cuando sea
+                posible.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-button">
+              <span>¿En qué distritos de Lima opera actualmente EcoRuta?</span>
+              <svg class="w-5 h-5 faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+            <div class="faq-content">
+              <p>Nuestra etapa piloto del concurso Crea y Emprende 2026 se enfoca en Lima Norte: Los Olivos, Comas,
+                Independencia, San Martin de Porres y Carabayllo. Planeamos expandirnos a todo Lima Metropolitana en las
+                siguientes fases.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-button">
+              <span>¿Qué es el concurso Crea y Emprende y cuál es la participación del proyecto?</span>
+              <svg class="w-5 h-5 faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+            <div class="faq-content">
+              <p>Es la competencia nacional de emprendimiento escolar organizada por el Ministerio de Educacion del Peru
+                (MINEDU). EcoRuta Peru representa a nuestra institucion educativa proponiendo una solucion tecnologica
+                viable con alto impacto social y ambiental.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 
+      Sección: Llamado a la Acción Final y Formulario de Contacto
+      Propósito: Capturar registros de usuarios con validacion cliente en JS.
+    -->
+    <section id="contacto" class="py-20 bg-[#1b4332] text-white relative">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center mb-12 animate-on-scroll">
+          <span
+            class="text-xs font-bold text-[#d96b43] tracking-widest uppercase bg-[#d96b43]/20 px-3 py-1 rounded-full">Únete
+            Hoy</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-3">
+            Sé parte del cambio en Lima Norte
+          </h2>
+          <p class="text-base sm:text-lg text-emerald-100/90 mt-2">
+            Regístrate para agendar tu primer recojo o afiliar tu negocio al programa.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-2xl text-[#192b20] animate-on-scroll">
+
+          <!-- Alerta de Confirmación de Envio Exitoso -->
+          <div id="form-success-alert"
+            class="hidden mb-6 p-4 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-900 text-sm font-semibold">
+            ¡Gracias por sumarte a EcoRuta Peru! Tu registro ha sido procesado correctamente. Nos pondremos en contacto
+            contigo muy pronto.
+          </div>
+
+          <form id="contact-form" class="space-y-6" novalidate>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+              <div>
+                <label for="form-nombre" class="block text-sm font-bold text-[#1b4332] mb-1">Nombre Completo *</label>
+                <input type="text" id="form-nombre" class="form-input" placeholder="Ejemplo: Maria Fernandez">
+                <span id="error-nombre" class="form-error-msg"></span>
+              </div>
+
+              <div>
+                <label for="form-email" class="block text-sm font-bold text-[#1b4332] mb-1">Correo Electrónico *</label>
+                <input type="email" id="form-email" class="form-input" placeholder="ejemplo@correo.pe">
+                <span id="error-email" class="form-error-msg"></span>
+              </div>
+
+            </div>
+
+            <div>
+              <label for="form-rol" class="block text-sm font-bold text-[#1b4332] mb-1">¿Cómo deseas participar?
+                *</label>
+              <select id="form-rol" class="form-input">
+                <option value="">Selecciona una opción...</option>
+                <option value="hogar">Quiero reciclar desde mi hogar (Vecino)</option>
+                <option value="comercio">Tengo una bodega o negocio (Plan Comercio)</option>
+                <option value="reciclador">Soy reciclador o pertenezco a una asociación</option>
+                <option value="empresa">Represento a una empresa o colegio</option>
+              </select>
+              <span id="error-rol" class="form-error-msg"></span>
+            </div>
+
+            <div>
+              <label for="form-mensaje" class="block text-sm font-bold text-[#1b4332] mb-1">Mensaje o Dirección
+                aproximada *</label>
+              <textarea id="form-mensaje" rows="4" class="form-input"
+                placeholder="Escribe tu distrito, direccion aproximada o consulta sobre el proyecto..."></textarea>
+              <span id="error-mensaje" class="form-error-msg"></span>
+            </div>
+
+            <button type="submit" class="btn-primary w-full py-4 text-base">
+              Enviar Registro e Impactar Mi Barrio
+            </button>
+
+          </form>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 
+    Sección: Pie de Página (Footer)
+    Propósito: Información institucional, mención al concurso MINEDU y derechos reservados.
+  -->
+  <footer class="bg-[#143326] text-emerald-100/80 pt-16 pb-12 border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-white/10">
+
+        <!-- Columna 1: Logo y Descripcion -->
+        <div class="md:col-span-2 space-y-4">
+          <div class="w-48 h-12 bg-white p-2 rounded-xl border border-white/20 shadow-md">
+            <img src="assets/logo/logo.svg" alt="EcoRuta Perú Footer Logo" class="w-full h-full object-contain">
+          </div>
+          <p class="text-sm max-w-md leading-relaxed text-emerald-100/70">
+            Plataforma desarrollada para el Concurso Nacional de Emprendimiento Escolar Crea y Emprende 2026 del
+            Ministerio de Educación del Perú (MINEDU). Promovemos la economía circular y la dignificación del trabajo de
+            segregadores en Lima Norte.
+          </p>
+        </div>
+
+        <!-- Columna 2: Navegación Rápida -->
+        <div>
+          <h4 class="font-bold text-white text-base mb-4">Navegación</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#proyecto" class="hover:text-white transition-colors">Sobre el Proyecto</a></li>
+            <li><a href="#como-funciona" class="hover:text-white transition-colors">Cómo Funciona</a></li>
+            <li><a href="#mapa" class="hover:text-white transition-colors">Mapa de Cobertura</a></li>
+            <li><a href="#planes" class="hover:text-white transition-colors">Planes y Precios</a></li>
+            <li><a href="#faq" class="hover:text-white transition-colors">Preguntas Frecuentes</a></li>
+          </ul>
+        </div>
+
+        <!-- Columna 3: Contacto e Institucion -->
+        <div>
+          <h4 class="font-bold text-white text-base mb-4">Contacto</h4>
+          <p class="text-sm text-emerald-100/70 mb-2">Lima Norte, Perú</p>
+          <p class="text-sm text-emerald-100/70 mb-4">contacto@ecorutaperu.pe</p>
+
+          <!-- Iconos Redes Sociales SVG -->
+          <div class="flex items-center space-x-3">
+            <a href="#"
+              class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#d96b43] transition-colors"
+              aria-label="Facebook">
+              <svg class="w-4 h-4 fill-current text-white" viewBox="0 0 24 24">
+                <path
+                  d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+              </svg>
+            </a>
+            <a href="#"
+              class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#d96b43] transition-colors"
+              aria-label="Instagram">
+              <svg class="w-4 h-4 fill-current text-white" viewBox="0 0 24 24">
+                <path
+                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+              </svg>
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Pie de Pagina Derechos y MINEDU -->
+      <div
+        class="pt-8 text-center text-xs text-emerald-100/60 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p>© 2026 EcoRuta Perú. Proyecto para el Concurso Nacional Crea y Emprende del Ministerio de Educación del Perú
+          (MINEDU).</p>
+        <p class="font-medium text-emerald-100/80">Diseño y desarrollo Front-End profesional</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- 
+    Ventana Modal Emergente: Pasarela de Pago y Suscripción (Checkout Modal)
+  -->
+  <div id="checkout-modal" class="fixed inset-0 hidden flex items-center justify-center p-4 z-[2000] overflow-y-auto">
+    <div
+      class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl relative border border-[#e1ece5] animate-on-scroll my-8">
+
+      <!-- Botón de Cierre Modal -->
+      <button id="close-checkout-modal" type="button"
+        class="absolute top-5 right-5 text-gray-400 hover:text-gray-700 p-2 rounded-full hover:bg-gray-100 transition-colors"
+        aria-label="Cerrar ventana de pago">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+
+      <!-- Cuerpo del Formulario de Checkout -->
+      <div id="checkout-modal-body">
+
+        <!-- Cabecera del Modal con Resumen del Plan -->
+        <div class="mb-6 pb-6 border-b border-[#e1ece5]">
+          <span
+            class="text-xs font-extrabold uppercase tracking-widest text-[#d96b43] bg-[#d96b43]/10 px-3 py-1 rounded-full">Suscripción
+            EcoRuta</span>
+          <h3 id="selected-plan-name" class="text-2xl font-extrabold text-[#1b4332] mt-2">Plan Comercio Aliado</h3>
+          <div class="flex items-baseline gap-2 mt-1">
+            <span id="selected-plan-price" class="text-3xl font-extrabold text-[#1b4332]">S/ 29 / mes</span>
+            <span class="text-xs text-[#40916c] font-bold">✓ Sin permanencia mínima</span>
+          </div>
+        </div>
+
+        <!-- Pestañas de Selección de Método de Pago -->
+        <div class="flex border-b border-gray-200 mb-6 space-x-2 overflow-x-auto">
+          <button type="button" class="payment-tab-btn active-payment-tab" data-target-tab="tab-tarjeta">
+            Tarjeta Débito / Crédito
+          </button>
+          <button type="button" class="payment-tab-btn" data-target-tab="tab-yape">
+            Yape / Plin
+          </button>
+          <button type="button" class="payment-tab-btn" data-target-tab="tab-banco">
+            Transferencia BCP
+          </button>
+        </div>
+
+        <form id="checkout-form" class="space-y-4">
+
+          <!-- Panel 1: Tarjeta Bancaria -->
+          <div id="tab-tarjeta" class="payment-tab-panel space-y-4">
+
+            <div>
+              <label for="card-holder"
+                class="block text-xs font-bold text-[#1b4332] uppercase tracking-wider mb-1">Nombre en la Tarjeta
+                *</label>
+              <input type="text" id="card-holder" class="form-input" placeholder="Nombre completo del titular" required>
+            </div>
+
+            <div>
+              <label for="card-number"
+                class="block text-xs font-bold text-[#1b4332] uppercase tracking-wider mb-1">Número de Tarjeta (16
+                dígitos) *</label>
+              <div class="relative">
+                <input type="text" id="card-number" class="form-input tracking-widest font-mono"
+                  placeholder="4557 0000 0000 0000" maxlength="19" required>
+                <div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1">
+                  <span
+                    class="text-xs font-extrabold text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-200">VISA</span>
+                  <span
+                    class="text-xs font-extrabold text-red-600 bg-red-50 px-1.5 py-0.5 rounded border border-red-200">MC</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label for="card-expiry"
+                  class="block text-xs font-bold text-[#1b4332] uppercase tracking-wider mb-1">Vencimiento (MM/AA)
+                  *</label>
+                <input type="text" id="card-expiry" class="form-input text-center font-mono" placeholder="12/28"
+                  maxlength="5" required>
+              </div>
+
+              <div>
+                <label for="card-cvv" class="block text-xs font-bold text-[#1b4332] uppercase tracking-wider mb-1">CVC /
+                  CVV *</label>
+                <input type="password" id="card-cvv" class="form-input text-center font-mono" placeholder="•••"
+                  maxlength="4" required>
+              </div>
+            </div>
+
+            <div>
+              <label for="card-district"
+                class="block text-xs font-bold text-[#1b4332] uppercase tracking-wider mb-1">Distrito de Facturación
+                (Lima) *</label>
+              <select id="card-district" class="form-input" required>
+                <option value="">Selecciona tu distrito...</option>
+                <option value="Los Olivos">Los Olivos</option>
+                <option value="Comas">Comas</option>
+                <option value="San Martin de Porres">San Martin de Porres</option>
+                <option value="Independencia">Independencia</option>
+                <option value="Carabayllo">Carabayllo</option>
+                <option value="Otro Distrito">Otro distrito de Lima</option>
+              </select>
+            </div>
+
+          </div>
+
+          <!-- Panel 2: Yape / Plin -->
+          <div id="tab-yape" class="payment-tab-panel hidden space-y-4 text-center py-2">
+            <div class="bg-[#5d1685]/10 p-4 rounded-2xl border border-[#5d1685]/30">
+              <span class="text-xs font-extrabold text-[#5d1685] uppercase tracking-wider block">Yapea o Plinea al
+                Número Oficial EcoRuta</span>
+              <p class="text-2xl font-extrabold text-[#5d1685] mt-1">987 654 321</p>
+              <p class="text-xs text-gray-600 mt-1">A nombre de: EcoRuta Perú S.A.C.</p>
+            </div>
+
+            <div class="text-left space-y-3 pt-2">
+              <div>
+                <label for="yape-phone"
+                  class="block text-xs font-bold text-[#1b4332] uppercase tracking-wider mb-1">Número de Celular Emisor
+                  *</label>
+                <input type="tel" id="yape-phone" class="form-input" placeholder="987 654 321" maxlength="9">
+              </div>
+              <div>
+                <label for="yape-code"
+                  class="block text-xs font-bold text-[#1b4332] uppercase tracking-wider mb-1">Código de Operación Yape
+                  / Plin *</label>
+                <input type="text" id="yape-code" class="form-input font-mono" placeholder="Ejemplo: 489201">
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel 3: Transferencia BCP / Interbank -->
+          <div id="tab-banco" class="payment-tab-panel hidden space-y-3 py-2 text-sm">
+            <div class="bg-gray-50 p-4 rounded-2xl border border-gray-200 space-y-2">
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-[#1b4332]">Cuenta Corriente BCP Soles:</span>
+                <button type="button" onclick="copiarTexto('191-98765432-0-99')"
+                  class="text-xs text-[#d96b43] font-bold underline hover:text-[#c55932]">Copiar</button>
+              </div>
+              <p class="font-mono text-xs text-gray-700 bg-white p-2 rounded border">191-98765432-0-99</p>
+
+              <div class="flex justify-between items-center pt-2">
+                <span class="font-bold text-[#1b4332]">CCI (Código Interbancario):</span>
+                <button type="button" onclick="copiarTexto('00219100987654320994')"
+                  class="text-xs text-[#d96b43] font-bold underline hover:text-[#c55932]">Copiar</button>
+              </div>
+              <p class="font-mono text-xs text-gray-700 bg-white p-2 rounded border">00219100987654320994</p>
+            </div>
+
+            <div>
+              <label for="bank-ref" class="block text-xs font-bold text-[#1b4332] uppercase tracking-wider mb-1">Número
+                de Operación de Transferencia *</label>
+              <input type="text" id="bank-ref" class="form-input font-mono" placeholder="Ejemplo: BCP-901824">
+            </div>
+          </div>
+
+          <!-- Botón Confirmar Suscripción -->
+          <div class="pt-4">
+            <button type="submit" class="btn-primary w-full py-4 text-base shadow-lg hover:shadow-xl transition-all">
+              Confirmar Pago y Activar Plan
+            </button>
+            <p class="text-center text-xs text-gray-500 mt-2">
+              Transacción protegida con cifrado SSL de 256 bits. Se enviará un comprobante electrónico a tu correo.
+            </p>
+          </div>
+
+        </form>
+
+      </div>
+
+      <!-- Estado de Éxito al Completar Pago -->
+      <div id="checkout-modal-success" class="hidden text-center py-8 space-y-4">
+        <div
+          class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto text-3xl font-extrabold">
+          ✓
+        </div>
+        <h3 class="text-2xl font-extrabold text-[#1b4332]">¡Suscripción Activada con Éxito!</h3>
+        <p class="text-sm text-[#4a5d52] max-w-sm mx-auto leading-relaxed">
+          Tu membresía ha sido registrada correctamente. Un coordinador de EcoRuta Perú se pondrá en contacto contigo
+          para programar tu primer recojo.
+        </p>
+        <div class="pt-4">
+          <button type="button" onclick="cerrarModal()" class="btn-primary px-8 py-3 text-sm">
+            Entendido y Regresar al Sitio
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 
+    Carga de Scripts JavaScript (Librerias y Codigo Modular)
+  -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="js/main.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/form.js"></script>
+  <script src="js/checkout.js"></script>
+</body>
+
+</html>

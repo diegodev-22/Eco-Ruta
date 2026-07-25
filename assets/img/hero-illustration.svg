@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e8f5e9" />
+      <stop offset="100%" stop-color="#fcfbf7" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#1b4332" flood-opacity="0.1" />
+    </filter>
+  </defs>
+
+  <rect width="600" height="500" rx="24" fill="url(#bg-grad)" />
+
+  <path d="M 100 380 Q 250 420 380 320 T 520 180" fill="none" stroke="#40916c" stroke-width="8" stroke-dasharray="12 8" opacity="0.6" />
+  <path d="M 80 200 Q 200 120 350 220 T 500 380" fill="none" stroke="#d96b43" stroke-width="6" stroke-dasharray="8 6" opacity="0.5" />
+
+  <g transform="translate(60, 240)" filter="url(#shadow)">
+    <rect width="110" height="90" rx="12" fill="#ffffff" stroke="#e2ece5" stroke-width="2" />
+    <path d="M 75 40 L 110 40 L 110 90 L 75 90 Z" fill="#1b4332" />
+    <polygon points="55,10 5,40 105,40" fill="#d96b43" />
+    <rect x="25" y="55" width="25" height="35" rx="4" fill="#40916c" />
+    <rect x="65" y="50" width="20" height="20" rx="3" fill="#e8f5e9" />
+    <text x="12" y="106" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1b4332">Hogar Ecológico</text>
+  </g>
+
+  <g transform="translate(420, 100)" filter="url(#shadow)">
+    <rect width="120" height="100" rx="12" fill="#ffffff" stroke="#e2ece5" stroke-width="2" />
+    <polygon points="60,10 10,45 110,45" fill="#1b4332" />
+    <rect x="20" y="55" width="30" height="45" fill="#40916c" />
+    <rect x="65" y="55" width="35" height="25" fill="#d96b43" />
+    <text x="15" y="116" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1b4332">Bodega/Negocio</text>
+  </g>
+
+  <g transform="translate(240, 180)" filter="url(#shadow)">
+    <rect width="160" height="130" rx="16" fill="#1b4332" />
+    <circle cx="80" cy="50" r="28" fill="#40916c" />
+    <path d="M 80 32 L 80 68 M 62 50 L 98 50" stroke="#fcfbf7" stroke-width="4" stroke-linecap="round" />
+    <rect x="30" y="88" width="100" height="28" rx="14" fill="#d96b43" />
+    <text x="42" y="106" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff">Ruta Optimizada</text>
+  </g>
+
+  <g transform="translate(160, 80)" filter="url(#shadow)">
+    <rect width="130" height="50" rx="25" fill="#ffffff" stroke="#40916c" stroke-width="2" />
+    <circle cx="30" cy="25" r="16" fill="#40916c" />
+    <text x="24" y="30" font-family="sans-serif" font-size="14" font-weight="bold" fill="#ffffff">✓</text>
+    <text x="56" y="24" font-family="sans-serif" font-size="11" font-weight="bold" fill="#1b4332">Recojo Confirmado</text>
+    <text x="56" y="38" font-family="sans-serif" font-size="10" fill="#4a5d52">10:30 AM - Hoy</text>
+  </g>
+
+  <g transform="translate(340, 340)" filter="url(#shadow)">
+    <rect width="150" height="54" rx="27" fill="#ffffff" stroke="#d96b43" stroke-width="2" />
+    <circle cx="32" cy="27" r="18" fill="#d96b43" />
+    <text x="24" y="33" font-family="sans-serif" font-size="14" font-weight="bold" fill="#ffffff">S/</text>
+    <text x="58" y="26" font-family="sans-serif" font-size="11" font-weight="bold" fill="#1b4332">+ Ingreso Justo</text>
+    <text x="58" y="40" font-family="sans-serif" font-size="10" fill="#4a5d52">Reciclador Aliado</text>
+  </g>
+
+  <circle cx="320" cy="245" r="10" fill="#d96b43" />
+  <circle cx="320" cy="245" r="20" fill="none" stroke="#d96b43" stroke-width="2" opacity="0.6">
+    <animate attributeName="r" values="10;30;10" dur="3s" repeatCount="indefinite" />
+  </circle>
+</svg>
